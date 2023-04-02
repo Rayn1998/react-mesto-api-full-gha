@@ -1,0 +1,16 @@
+.footer {
+  max-width: 880px;
+  height: auto;
+  color: #545454;
+  margin: 0;
+  padding: 67px 15px 60px 15px;
+  display: flex;
+  flex-shrink: 0;
+}
+
+@media screen and (max-width: 440px) {
+  .footer {
+    min-height: 14px;
+    padding: 48px 19px 36px 19px;
+  }
+}

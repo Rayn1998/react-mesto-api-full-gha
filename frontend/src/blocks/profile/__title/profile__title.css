@@ -1,0 +1,13 @@
+.profile__title {
+  grid-area: name;
+  display: flex;
+  gap: 18px;
+  justify-content: flex-start;
+  /* margin: 0 auto; */
+}
+
+@media screen and (max-width: 440px) {
+  .profile__title {
+    gap: 10px;
+  }
+}

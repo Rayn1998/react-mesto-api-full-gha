@@ -1,0 +1,7 @@
+.element__base {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 26px; /* высота 362px получается с отступом 26px */
+  margin-left: 21px;
+  margin-right: 15px;
+}

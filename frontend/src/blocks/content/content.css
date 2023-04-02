@@ -1,0 +1,7 @@
+.content {
+  background-color: #000000;
+  min-height: 100vh;
+  max-width: 900px;
+  margin: 0 auto;
+  flex: 1;
+}

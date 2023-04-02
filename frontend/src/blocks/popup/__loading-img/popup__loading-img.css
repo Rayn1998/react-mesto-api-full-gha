@@ -1,0 +1,16 @@
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.popup__loading-img {
+  min-width: 120px;
+  min-height: 120px;
+  max-width: 150px;
+  transform: rotate(360deg);
+  animation: spin 4s linear infinite;
+}
