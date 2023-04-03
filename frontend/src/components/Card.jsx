@@ -1,8 +1,11 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 function Card({card, onImageClick, onCardLike, onCardDelete}) {
   const currentUser = useContext(CurrentUserContext)
+  useEffect(() => {
+    console.log(currentUser)
+  }, [currentUser]);
 
   const isOwn = card.owner._id === currentUser._id
   const isLiked = card.likes.some(i => i._id === currentUser._id)

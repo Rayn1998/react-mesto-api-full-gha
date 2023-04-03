@@ -1,17 +1,17 @@
-export const BASE_URL = 'https://auth.nomoreparties.co';
+// export const BASE_URL = 'https://auth.nomoreparties.co';
+export const BASE_URL = 'http://localhost:3001';
 
 export const register = async (password, email) => {
     const res = await fetch(`${BASE_URL}/signup`, {
         method: 'POST',
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
         },
         body: JSON.stringify({
             "password": `${password}`,
             "email": `${email}`
-        })
+        }),
     })
-
     return checkResponse(res)
 }
 

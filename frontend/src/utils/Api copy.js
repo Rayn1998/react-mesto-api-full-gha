@@ -13,19 +13,19 @@ class Api {
         }
     }
 
-    async _request(url, options) {
-      return await fetch(url, options).then(this._getResponseData)
+    _request(url, options) {
+      return fetch(url, options).then(this._getResponseData)
     }
 
     like(cardId) {
-      return this._request(`${this._address}/cards/${cardId}/likes`, {
+      return this._request(`${this._address}/${this._cohort}/cards/${cardId}/likes`, {
         method: 'PUT',
         headers: this._headers,
       })
     }
 
     deleteLike(cardData) {
-      return this._request(`${this._address}/cards/${cardData._id}/likes`, {
+      return this._request(`${this._address}/${this._cohort}/cards/${cardData._id}/likes`, {
         method: 'DELETE',
         headers: this._headers,
       })
@@ -33,21 +33,21 @@ class Api {
 
     // USER
     getUserData() {
-        return this._request(`${this._address}/users/me`, {
+        return this._request(`${this._address}/${this._cohort}/users/me`, {
           method: 'GET',
           headers: this._headers,
       })
     }
 
     getCardsData() {
-      return this._request(`${this._address}/cards`, {
+      return this._request(`${this._address}/${this._cohort}/cards`, {
         method: 'GET',
         headers: this._headers,
       })
     }
 
     sendData(newData) {
-      return this._request(`${this._address}/users/me`, {
+      return this._request(`${this._address}/${this._cohort}/users/me`, {
         method: 'PATCH',
         headers: this._headers,
         body: JSON.stringify({
@@ -58,7 +58,7 @@ class Api {
     }
 
     editAvatar(link) {
-      return this._request(`${this._address}/users/me/avatar`, {
+      return this._request(`${this._address}/${this._cohort}/users/me/avatar`, {
         method: 'PATCH',
         headers: this._headers,
         body: JSON.stringify({
@@ -68,7 +68,7 @@ class Api {
     }
 
     newCard(cardData) {
-      return this._request(`${this._address}/cards`, {
+      return this._request(`${this._address}/${this._cohort}/cards`, {
         method: 'POST',
         headers: this._headers,
         body: JSON.stringify({
@@ -79,7 +79,7 @@ class Api {
     }
 
     deleteCard(cardId) {
-      return this._request(`${this._address}/cards/${cardId}`, {
+      return this._request(`${this._address}/${this._cohort}/cards/${cardId}`, {
         method: 'DELETE',
         headers: this._headers
       })

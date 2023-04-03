@@ -1,4 +1,4 @@
-import React, { useContext} from 'react';
+import React, { useContext } from 'react';
 import avatar from '../images/avatar.jpg';
 import Card from './Card';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
@@ -37,7 +37,7 @@ function Main({
       </section>
         
       <section className="elements">
-        {cards.map(card => {
+        {cards?.map(card => {
             return (
               <Card 
                 card={card} 

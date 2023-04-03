@@ -67,7 +67,7 @@ const addLike = async (req, res, next) => {
     if (!handleLike) {
       next(new NotFoundError('Карточка не найдена'));
     } else {
-      res.send({ message: 'Лайк поставлен' });
+      res.send({ card: handleLike });
     }
   } catch (e) {
     if (e.name === 'CastError') {
@@ -88,7 +88,7 @@ const removeLike = async (req, res, next) => {
       { new: true },
     );
     if (disLike) {
-      res.send({ message: 'Лайк снят' });
+      res.send({ card: disLike });
     } else {
       next(new NotFoundError('Карточка не найдена'));
     }
