@@ -14,9 +14,7 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 process.env.ACCESS_TOKEN_SECRET = 'default_key';
 
 const app = express();
-app.use(cors({
-  origin: '*',
-}));
+app.use(cors());
 
 const { PORT = 3001 } = process.env;
 
