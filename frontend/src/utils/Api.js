@@ -114,7 +114,7 @@ class Api {
 
 const api = new Api({
     // baseUrl: 'http://127.0.0.1:3001',
-    baseUrl: 'https://api.bodolanov.nomoredomains.work/',
+    baseUrl: 'https://api.bodolanov.nomoredomains.work',
 })
 
 export default api
