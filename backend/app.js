@@ -11,12 +11,8 @@ require('dotenv').config();
 const NotFoundError = require('./middlewares/NotFoundErr');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
-// process.env.ACCESS_TOKEN_SECRET = 'default_key';
-
 const app = express();
 app.use(cors());
-
-console.log(process.env.NODE_ENV);
 
 const { PORT = 3001 } = process.env;
 

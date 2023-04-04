@@ -113,7 +113,9 @@ class Api {
 }
 
 const api = new Api({
-    baseUrl: process.env.NODE_ENV === 'production' ? 'https://api.bodolanov.nomoredomains.work' : 'http://127.0.0.1:3001',
+    // baseUrl: process.env.NODE_ENV === 'production' ? 'https://api.bodolanov.nomoredomains.work' : 'http://127.0.0.1:3001',
+    baseUrl: 'https://api.bodolanov.nomoredomains.work',
+    // baseUrl: 'http://127.0.0.1:3001',
 })
 
 export default api

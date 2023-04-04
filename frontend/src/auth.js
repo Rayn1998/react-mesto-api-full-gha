@@ -1,5 +1,5 @@
-// export const BASE_URL = 'https://api.bodolanov.nomoredomains.work';
-export const BASE_URL = 'http://127.0.0.1:3001';
+export const BASE_URL = 'https://api.bodolanov.nomoredomains.work';
+// export const BASE_URL = 'http://127.0.0.1:3001';
 
 export const register = async (password, email) => {
     const res = await fetch(`${BASE_URL}/signup`, {
