@@ -16,7 +16,6 @@ class Api {
     }
 
     async _request(url, options) {
-      console.log(url, options)
       return await fetch(url, options).then(this._getResponseData)
     }
 
@@ -24,7 +23,8 @@ class Api {
       return await this._request(`${this._address}/cards/${cardId}/likes`, {
         method: 'PUT',
         headers: {
-            authorization: this._getToken()
+            authorization: this._getToken(),
+            "Content-Type": "application/json"
         },
       })
     }
@@ -33,7 +33,8 @@ class Api {
       return await this._request(`${this._address}/cards/${cardId}/likes`, {
         method: 'DELETE',
         headers: {
-            authorization: this._getToken()
+            authorization: this._getToken(),
+            "Content-Type": "application/json"
         },
       })
     }
@@ -43,7 +44,8 @@ class Api {
         return this._request(`${this._address}/users/me`, {
           method: 'GET',
           headers: {
-            authorization: this._getToken()
+            authorization: this._getToken(),
+            "Content-Type": "application/json"
         },
       })
     }
@@ -52,7 +54,8 @@ class Api {
       return this._request(`${this._address}/cards`, {
         method: 'GET',
         headers: {
-            authorization: this._getToken()
+            authorization: this._getToken(),
+            "Content-Type": "application/json"
         },
       })
     }
@@ -61,7 +64,8 @@ class Api {
       return this._request(`${this._address}/users/me`, {
         method: 'PATCH',
         headers: {
-          authorization: this._getToken()
+          authorization: this._getToken(),
+          "Content-Type": "application/json"
         },
         body: JSON.stringify({
             name: newData.name,
@@ -74,7 +78,8 @@ class Api {
       return this._request(`${this._address}/users/me/avatar`, {
         method: 'PATCH',
         headers: {
-            authorization: this._getToken()
+            authorization: this._getToken(),
+            "Content-Type": "application/json"
         },
         body: JSON.stringify({
             avatar: link.avatar,
@@ -83,15 +88,15 @@ class Api {
     }
 
     newCard(cardData) {
-      console.log(cardData)
       return this._request(`${this._address}/cards`, {
         method: 'POST',
         headers: {
-            authorization: this._getToken()
+            authorization: this._getToken(),
+            "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            name: cardData.name,
             link: cardData.link,
+            name: cardData.name,
         })
       })
     }
@@ -100,7 +105,8 @@ class Api {
       return this._request(`${this._address}/cards/${cardId}`, {
         method: 'DELETE',
         headers: {
-            authorization: this._getToken()
+            authorization: this._getToken(),
+            "Content-Type": "application/json"
         },
       })
     }
