@@ -7,20 +7,29 @@ const cards = require('./routes/cards');
 const users = require('./routes/users');
 const { login, createUser } = require('./controllers/users');
 const { auth } = require('./middlewares/auth');
-// require('dotenv').config();
+require('dotenv').config();
 const NotFoundError = require('./middlewares/NotFoundErr');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
-process.env.ACCESS_TOKEN_SECRET = 'default_key';
+// process.env.ACCESS_TOKEN_SECRET = 'default_key';
 
 const app = express();
 app.use(cors());
+
+console.log(process.env.NODE_ENV);
 
 const { PORT = 3001 } = process.env;
 
 app.use(requestLogger);
 
 app.use(bodyParser.json());
+
+app.get('/crash-test', () => {
+  setTimeout(() => {
+    throw new Error('Сервер сейчас упадёт');
+  }, 0);
+});
+
 app.post(
   '/signin',
   celebrate({

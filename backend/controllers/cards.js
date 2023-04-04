@@ -13,12 +13,14 @@ const getCards = async (req, res, next) => {
   res.status(200).json(cards);
 };
 
-const createCard = (req, res, next) => {
+const createCard = async (req, res, next) => {
   const { name, link } = req.body;
   const id = req.user._id;
 
-  Card.create({ name, link, owner: id })
-    .then((card) => res.status(201).send({ data: card }))
+  (await Card.create({ name, link, owner: id })).populate('owner')
+    .then((card) => {
+      res.status(201).send({ data: card })
+    })
     .catch((err) => {
       if (err.name === 'ValidationError') {
         const error = new BadRequestError('Введите корректные данные');
