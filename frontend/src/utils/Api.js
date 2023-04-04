@@ -16,6 +16,7 @@ class Api {
     }
 
     async _request(url, options) {
+      console.log(url, options)
       return await fetch(url, options).then(this._getResponseData)
     }
 
@@ -59,7 +60,9 @@ class Api {
     sendData(newData) {
       return this._request(`${this._address}/users/me`, {
         method: 'PATCH',
-        headers: this._headers,
+        headers: {
+          authorization: this._getToken()
+        },
         body: JSON.stringify({
             name: newData.name,
             about: newData.about
@@ -80,6 +83,7 @@ class Api {
     }
 
     newCard(cardData) {
+      console.log(cardData)
       return this._request(`${this._address}/cards`, {
         method: 'POST',
         headers: {

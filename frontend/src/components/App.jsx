@@ -78,14 +78,6 @@ function App() {
 		}
 	}, []);
     
-    // const api = new Api({
-    //     baseUrl: 'http://127.0.0.1:3001',
-    //     headers: {
-    //         'authorization': `${currentUser}`,
-    //         'Content-Type': 'application/json',
-    //     }
-    // });
-
 	const authenticate = useCallback(
 		async (password, email) => {
 			localStorage.setItem('email', email);
@@ -237,6 +229,7 @@ function App() {
 
 	// Функции сабмитов
 	function handleUpdateUser(newData) {
+		console.log(newData)
 		setIsLoading(true);
 		api.sendData(newData)
 			.then((data) => setCurrentUser({ ...currentUser, ...data }))
