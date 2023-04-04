@@ -1,8 +1,6 @@
 class Api {
     constructor(options) {
         this._address = options.baseUrl;
-        // this._cohort = options.cohort;
-        this._headers = options.headers;
     }
     
     _getResponseData(res) {
@@ -13,21 +11,29 @@ class Api {
         }
     }
 
+    _getToken() {
+        return localStorage.getItem('jwt');
+    }
+
     async _request(url, options) {
       return await fetch(url, options).then(this._getResponseData)
     }
 
-    like(cardId) {
-      return this._request(`${this._address}/cards/${cardId}/likes`, {
+    async like(cardId) {
+      return await this._request(`${this._address}/cards/${cardId}/likes`, {
         method: 'PUT',
-        headers: this._headers,
+        headers: {
+            authorization: this._getToken()
+        },
       })
     }
 
-    deleteLike(cardData) {
-      return this._request(`${this._address}/cards/${cardData._id}/likes`, {
+    async deleteLike(cardId) {
+      return await this._request(`${this._address}/cards/${cardId}/likes`, {
         method: 'DELETE',
-        headers: this._headers,
+        headers: {
+            authorization: this._getToken()
+        },
       })
     }
 
@@ -35,14 +41,18 @@ class Api {
     getUserData() {
         return this._request(`${this._address}/users/me`, {
           method: 'GET',
-          headers: this._headers,
+          headers: {
+            authorization: this._getToken()
+        },
       })
     }
 
     getCardsData() {
       return this._request(`${this._address}/cards`, {
         method: 'GET',
-        headers: this._headers,
+        headers: {
+            authorization: this._getToken()
+        },
       })
     }
 
@@ -60,7 +70,9 @@ class Api {
     editAvatar(link) {
       return this._request(`${this._address}/users/me/avatar`, {
         method: 'PATCH',
-        headers: this._headers,
+        headers: {
+            authorization: this._getToken()
+        },
         body: JSON.stringify({
             avatar: link.avatar,
         })
@@ -70,7 +82,9 @@ class Api {
     newCard(cardData) {
       return this._request(`${this._address}/cards`, {
         method: 'POST',
-        headers: this._headers,
+        headers: {
+            authorization: this._getToken()
+        },
         body: JSON.stringify({
             name: cardData.name,
             link: cardData.link,
@@ -81,18 +95,15 @@ class Api {
     deleteCard(cardId) {
       return this._request(`${this._address}/cards/${cardId}`, {
         method: 'DELETE',
-        headers: this._headers
+        headers: {
+            authorization: this._getToken()
+        },
       })
     }
 }
 
-// const api = new Api ({
-//     baseUrl: 'https://mesto.nomoreparties.co/v1',
-//     cohort: 'cohort-50',
-//     headers: {
-//       authorization: '7cf72c5a-6762-41bc-abd0-7773b56f9a95',
-//       'Content-Type': 'application/json'
-//     }
-// })
+const api = new Api({
+    baseUrl: 'http://127.0.0.1:3001',
+})
 
-export default Api
+export default api

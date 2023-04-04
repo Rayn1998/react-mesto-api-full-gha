@@ -4,7 +4,7 @@ import '../pages/index.css';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
-import Api from '../utils/Api';
+import api from '../utils/Api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import EditAvatarPopup from './EditAvatarPopup';
 import EditProfilePopup from './EditProfilePopup';
@@ -47,14 +47,14 @@ function App() {
 		isInfoToolTipPopup;
 
 	const setUserState = useCallback((data, email) => {
-		setIsLoadingPopupOpen(true);
+        setIsLoadingPopupOpen(true);
 		localStorage.setItem('jwt', data);
 		getUserData()
 			.then((userData) =>
 				setCurrentUser({ ...currentUser, ...userData, email })
 			)
 			.catch((err) => console.log(err));
-
+        
 		getCardsData()
 			.then((cardsData) => setCards(cardsData))
 			.catch((err) => console.log(err));
@@ -67,7 +67,7 @@ function App() {
 
 			const jwt = localStorage.getItem('jwt');
 			const user = await auth.checkToken(jwt);
-			const email = user.data.email;
+			const email = user.email;
 			setUserState(jwt, email);
 
 			setIsLoggedIn(true);
@@ -77,17 +77,14 @@ function App() {
 			setIsLoadingPopupOpen(false);
 		}
 	}, []);
-
-	let jwt = localStorage.getItem('jwt');
-
-	const api = new Api({
-		baseUrl: 'http://127.0.0.1:3001',
-		headers: {
-			// authorization: '7cf72c5a-6762-41bc-abd0-7773b56f9a95',
-			authorization: `${jwt}`,
-			'Content-Type': 'application/json',
-		},
-	});
+    
+    // const api = new Api({
+    //     baseUrl: 'http://127.0.0.1:3001',
+    //     headers: {
+    //         'authorization': `${currentUser}`,
+    //         'Content-Type': 'application/json',
+    //     }
+    // });
 
 	const authenticate = useCallback(
 		async (password, email) => {
@@ -96,7 +93,7 @@ function App() {
 			try {
 				const data = await auth.authenticate(password, email);
 				if (data.token) {
-					setUserState(data.token, email);
+                    setUserState(data.token, email);
 					setIsLoggedIn(true);
 				}
 			} catch {
@@ -144,8 +141,8 @@ function App() {
 
 	// Функции для работы с карточками
 	function likeCard(data) {
-		setCards((state) => {
-			return state.map((card) => {
+        setCards((state) => {
+            return state.map((card) => {
 				if (card._id === data.card._id) {
 					return data.card
 				} else {
@@ -156,15 +153,21 @@ function App() {
 	}
 
 	function handleCardLike(card) {
-		const isLiked = card.likes.some((i) => i._id === currentUser._id);
+		const isLiked = card.likes.some((i) => {
+            return i._id === currentUser._id
+        });
 		isLiked
 			? api
-					.deleteLike(card)
-					.then(likeCard)
+					.deleteLike(card._id)
+					.then(res => {
+                        likeCard(res);
+                    })
 					.catch((err) => console.log(err))
 			: api
 					.like(card._id)
-					.then(likeCard)
+					.then(res => {
+                        likeCard(res);
+                    })
 					.catch((err) => console.log(err));
 	}
 
@@ -253,8 +256,8 @@ function App() {
 
 	// USEEFFECTS
 	useEffect(() => {
-		checkToken();
-	}, [checkToken]);
+        checkToken();
+	}, []);
 
 	useEffect(() => {
 		function closeByEsc(e) {

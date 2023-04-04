@@ -63,7 +63,7 @@ const addLike = async (req, res, next) => {
       cardId,
       { $addToSet: { likes: userId } },
       { new: true },
-    );
+    ).populate(['likes', 'owner']);
     if (!handleLike) {
       next(new NotFoundError('Карточка не найдена'));
     } else {
@@ -86,7 +86,7 @@ const removeLike = async (req, res, next) => {
       cardId,
       { $pull: { likes: userId } },
       { new: true },
-    );
+    ).populate(['likes', 'owner']);
     if (disLike) {
       res.send({ card: disLike });
     } else {

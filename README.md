@@ -8,7 +8,7 @@
 
 ## Ссылки на проект
 
-IP-адрес x.x.x.x
+IP-адрес 84.201.166.238
 
 Frontend https://https://github.com/Rayn1998/react-mesto-auth
 
