@@ -1,24 +1,28 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
 const cors = require('cors');
 const { Joi, celebrate, errors } = require('celebrate');
 const cards = require('./routes/cards');
 const users = require('./routes/users');
 const { login, createUser } = require('./controllers/users');
 const { auth } = require('./middlewares/auth');
-require('dotenv').config();
 const NotFoundError = require('./middlewares/NotFoundErr');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-
-const app = express();
-app.use(cors());
+const { handleError } = require('./middlewares/error');
+const { linkPattern } = require('./utils/constants');
 
 const { PORT = 3001 } = process.env;
 
+const app = express();
+
+app.use(cors({
+  origin: '*',
+}));
+
 app.use(requestLogger);
 
-app.use(bodyParser.json());
+app.use(express.json());
 
 app.get('/crash-test', () => {
   setTimeout(() => {
@@ -42,7 +46,7 @@ app.post(
     body: Joi.object().keys({
       name: Joi.string().min(2).max(30),
       about: Joi.string().min(2).max(30),
-      avatar: Joi.string().pattern(/^(ftp|http|https):\/\/[^"]+\.\w{2,}/),
+      avatar: Joi.string().pattern(linkPattern),
       email: Joi.string().required().email(),
       password: Joi.string().required(),
     }),
@@ -52,23 +56,20 @@ app.post(
 app.use('/users', auth, users);
 app.use('/cards', auth, cards);
 
-app.use(errorLogger);
-
-app.use(errors());
-
 app.use('*', auth, (req, res, next) => {
   next(new NotFoundError('Страница не найдена'));
 });
 
+app.use(errorLogger);
+
+app.use(errors());
+
 app.use((err, req, res, next) => {
-  err.statusCode = err.statusCode || 500;
-  err.message = err.message || 'На сервере произошла ошибка';
-  res.status(err.statusCode).send({ message: err.message });
-  next();
+  handleError(err, req, res, next);
 });
 
 mongoose.connect(
-  'mongodb://127.0.0.1:27017/mestodb',
+  process.env.DB_ADDRESS,
   {
     useNewUrlParser: true,
   },

@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/users');
@@ -10,10 +11,10 @@ const getUsers = async (req, res, next) => {
   let users;
   try {
     users = await User.find({});
+    res.send({ message: users });
   } catch (err) {
     next(err);
   }
-  res.send({ message: users });
 };
 
 const getMe = async (req, res, next) => {
@@ -21,14 +22,10 @@ const getMe = async (req, res, next) => {
   let user;
   try {
     user = await User.findById(id);
+    res.status(200).json(user);
   } catch (err) {
-    if (err.name === 'CastError') {
-      next(new BadRequestError('Пользователь не найден'));
-    } else {
-      next(err);
-    }
+    next(err);
   }
-  res.status(200).json(user);
 };
 
 const getUser = async (req, res, next) => {
@@ -42,7 +39,11 @@ const getUser = async (req, res, next) => {
       }
     });
   } catch (err) {
-    next(err);
+    if (err instanceof mongoose.Error.CastError) {
+      next(new BadRequestError('Пользователь не найден'));
+    } else {
+      next(err);
+    }
   }
 };
 
@@ -67,7 +68,7 @@ const createUser = async (req, res, next) => {
           email,
         }))
         .catch((e) => {
-          if (e.name === 'ValidationError') {
+          if (e instanceof mongoose.Error.ValidationError) {
             next(new BadRequestError('Введены некорректные данные'));
           } else if (e.code === 11000) {
             next(
@@ -107,7 +108,7 @@ const refreshAvatar = async (req, res, next) => {
     const userAvatar = await User.findByIdAndUpdate(
       req.user._id,
       { avatar },
-      { new: true },
+      { new: true, runValidators: true },
     );
     res.status(200).send(userAvatar);
   } catch (err) {
@@ -126,10 +127,11 @@ const login = async (req, res, next) => {
     .then((user) => {
       if (!user) {
         next(new BadAuthError('Неправильные почта или пароль'));
+        return;
       }
       bcrypt.compare(password, user.password, (err, result) => {
         if (result) {
-          const token = jwt.sign({ _id: user._id }, 'secret', {
+          const token = jwt.sign({ _id: user._id }, process.env.NODE_ENV !== 'production' ? process.env.JWT_SECRET : 'secret', {
             expiresIn: '7d',
           });
           res.json({ token });

@@ -1,4 +1,4 @@
-export const BASE_URL = 'https://api.bodolanov.nomoredomains.work';
+export const BASE_URL = process.env.NODE_ENV === 'development' ? 'http://127.0.0.1:3001' : 'https://api.bodolanov.nomoredomains.work';
 // export const BASE_URL = 'http://127.0.0.1:3001';
 
 export const register = async (password, email) => {

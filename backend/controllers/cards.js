@@ -7,19 +7,20 @@ const getCards = async (req, res, next) => {
   let cards;
   try {
     cards = await Card.find({}).populate(['owner', 'likes']);
+    res.status(200).json(cards);
   } catch (err) {
     next(err);
   }
-  res.status(200).json(cards);
 };
 
 const createCard = async (req, res, next) => {
   const { name, link } = req.body;
   const id = req.user._id;
 
-  (await Card.create({ name, link, owner: id })).populate('owner')
+  (await Card.create({ name, link, owner: id }))
+    .populate('owner')
     .then((card) => {
-      res.status(201).send({ data: card })
+      res.status(201).send({ data: card });
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {

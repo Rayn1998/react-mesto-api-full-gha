@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { modelLinkPattern, modelEmailPatter } = require('../utils/constants');
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -16,7 +17,7 @@ const userSchema = new mongoose.Schema({
   avatar: {
     type: String,
     validate: {
-      validator: (url) => /^(ftp|http|https):\/\/[^ "]+$/.test(url),
+      validator: (url) => modelLinkPattern.test(url),
       message: 'link is incorrect',
     },
     default: 'https://pictures.s3.yandex.net/resources/jacques-cousteau_1604399756.png',
@@ -27,7 +28,7 @@ const userSchema = new mongoose.Schema({
     required: true,
     validate: {
       validator: (email) => {
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email);
+        modelEmailPatter.test(email);
       },
       message: 'email is incorrect',
     },

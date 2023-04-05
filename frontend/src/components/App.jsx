@@ -21,6 +21,8 @@ import InfoToolTip from './InfoToolTip';
 import Loading from './Loading';
 import PageNotFound from './PageNotFound';
 
+console.log(process.env.NODE_ENV)
+
 function App() {
 	const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
 	const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
