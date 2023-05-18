@@ -19,8 +19,8 @@ class Api {
       return await fetch(url, options).then(this._getResponseData)
     }
 
-    async like(cardId) {
-      return await this._request(`${this._address}/cards/${cardId}/likes`, {
+    like(cardId) {
+      return this._request(`${this._address}/cards/${cardId}/likes`, {
         method: 'PUT',
         headers: {
             authorization: this._getToken(),
@@ -29,8 +29,8 @@ class Api {
       })
     }
 
-    async deleteLike(cardId) {
-      return await this._request(`${this._address}/cards/${cardId}/likes`, {
+     deleteLike(cardId) {
+      return this._request(`${this._address}/cards/${cardId}/likes`, {
         method: 'DELETE',
         headers: {
             authorization: this._getToken(),

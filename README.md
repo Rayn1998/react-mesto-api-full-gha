@@ -1,15 +1,22 @@
-[![Tests](https://github.com/yandex-praktikum/react-mesto-api-full-gha/actions/workflows/tests.yml/badge.svg)](https://github.com/yandex-praktikum/react-mesto-api-full-gha/actions/workflows/tests.yml)
-# react-mesto-api-full
-Репозиторий для приложения проекта `Mesto`, включающий фронтенд и бэкенд части приложения со следующими возможностями: авторизации и регистрации пользователей, операции с карточками и пользователями. Бэкенд расположите в директории `backend/`, а фронтенд - в `frontend/`. 
-  
-Пожалуйста, прикрепите в это описание ссылку на сайт, размещенный на Яндекс.Облаке.
+# Project Mesto
+___
+## Used technologies: 
+- React
+- NodeJS
+- Express
+- React-Router
+- Joi
+- Bcrypt
+- Celebrate
+___
 
-Адрес репозитория: https://github.com/https://github.com/Rayn1998/react-mesto-api-full-gha
+Project allows to share your photos, watch and like the photos of other users.
+There is a registration/authentication, ability to change the profile name and description as well as profile avatar.
+___
 
-## Ссылки на проект
-
-IP-адрес 84.201.166.238
-
-Frontend https://https://github.com/Rayn1998/react-mesto-auth
-
-Backend https://https://github.com/Rayn1998/express-mesto-gha
+To start the project, you should follow the next steps:
+- clone the repo, using the **git clone 'repo url'**
+- then enter the **'npm ci'** in the folders of frontend and backend
+- run the **'npm run dev'** in the terminal of backend folder window
+- run the **'npm run start'** in the terminal of frontend folder window
+- that's it

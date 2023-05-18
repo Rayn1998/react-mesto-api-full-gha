@@ -3,6 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const { Joi, celebrate, errors } = require('celebrate');
+
 const cards = require('./routes/cards');
 const users = require('./routes/users');
 const { login, createUser } = require('./controllers/users');
@@ -12,7 +13,7 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { handleError } = require('./middlewares/error');
 const { linkPattern } = require('./utils/constants');
 
-const { PORT = 3001 } = process.env;
+const { PORT = 3001, DB_ADDRESS = 'mongodb://127.0.0.1:27017/mestodb' } = process.env;
 
 const app = express();
 
@@ -69,7 +70,7 @@ app.use((err, req, res, next) => {
 });
 
 mongoose.connect(
-  process.env.DB_ADDRESS,
+  DB_ADDRESS,
   {
     useNewUrlParser: true,
   },
