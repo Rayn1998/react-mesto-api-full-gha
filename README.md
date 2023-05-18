@@ -20,3 +20,5 @@ To start the project, you should follow the next steps:
 - run the **'npm run dev'** in the terminal of backend folder window
 - run the **'npm run start'** in the terminal of frontend folder window
 - that's it
+
+![image](demo.png)
